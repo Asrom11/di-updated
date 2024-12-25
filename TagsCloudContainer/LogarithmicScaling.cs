@@ -12,12 +12,13 @@ public class LogarithmicScaling: ITextSizeCalculator
         
         const float minFontSize = 12f;
         const float maxFontSize = 72f;
+        const float maxFrequency = 100f;
         
         const float power = 0.7f;
         
         var normalizedFreq = (float)Math.Pow(frequency, power);
         var fontSize = minFontSize + (maxFontSize - minFontSize) * normalizedFreq / 
-            (float)Math.Pow(100, power);
+            (float)Math.Pow(maxFrequency, power);
 
         fontSize = Math.Max(minFontSize, Math.Min(maxFontSize, fontSize));
         
@@ -25,7 +26,8 @@ public class LogarithmicScaling: ITextSizeCalculator
         
         var size = graphics.MeasureString(word, font);
 
-        var padding = fontSize * 0.2f;
+        const float paddingMultiplier = 0.2f;
+        var padding = fontSize * paddingMultiplier;
         
         return new Size(
             (int)Math.Ceiling(size.Width + padding),

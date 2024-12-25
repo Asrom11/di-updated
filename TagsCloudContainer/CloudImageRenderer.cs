@@ -8,6 +8,9 @@ namespace TagsCloudVisualization;
 public class CloudImageRenderer : ITagCloudRenderer
 {
     private readonly Random random = new();
+    private const float MinFontSize = 12f;
+    private const float MaxFontSize = 72f;
+    private const float FrequencyMultiplier = 2f;
 
     public void Render(IEnumerable<Tag> tags, string outputFilePath, RenderingOptions options)
     {
@@ -22,7 +25,7 @@ public class CloudImageRenderer : ITagCloudRenderer
 
         foreach (var tag in tags)
         {
-            var fontSize = Math.Max(12, Math.Min(72, tag.Frequency * 2));
+            var fontSize = Math.Max(MinFontSize, Math.Min(MaxFontSize, tag.Frequency * FrequencyMultiplier));
 
             using var font = new Font(options.Font, fontSize, FontStyle.Bold);
             
