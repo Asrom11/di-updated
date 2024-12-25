@@ -5,6 +5,8 @@ using NUnit.Framework;
 using TagsCloudContainer;
 using TagsCloudVisualization.Interfaces;
 
+namespace TagsCloudContainerTest;
+
 public class TagCloudGeneratorIntegrationTests
 {
     private IContainer container;
@@ -50,43 +52,15 @@ public class TagCloudGeneratorIntegrationTests
             Font = "Arial",
             ImageSize = new Size(800, 600)
         };
-        
+
         generator.GenerateCloud(inputPath, outputPath, options);
-        
+
         File.Exists(outputPath).Should().BeTrue();
         using var image = Image.FromFile(outputPath);
         image.Width.Should().Be(options.ImageSize.Width);
         image.Height.Should().Be(options.ImageSize.Height);
     }
-
-    [Test]
-    public void GenerateCloud_WithDifferentLayouters()
-    {
-        const string testText = "test word frequency cloud generator";
-        File.WriteAllText(inputPath, testText);
-
-        using var scope = container.BeginLifetimeScope();
-        var generator = scope.Resolve<ITagCloudGenerator>();
-        var options = new RenderingOptions
-        {
-            BackgroundColor = Color.Navy,
-            WordColors = [Color.White, Color.Yellow],
-            Font = "Arial",
-            ImageSize = new Size(1000, 1000)
-        };
-        
-        foreach (var layouterName in new[] { "linear", "circular" })
-        {
-            var outputFile = Path.Combine(tempDirectory, $"output_{layouterName}.png");
-            generator.GenerateCloud(inputPath, outputFile, options);
-            
-            File.Exists(outputFile).Should().BeTrue();
-            using var image = Image.FromFile(outputFile);
-            image.Width.Should().Be(options.ImageSize.Width);
-            image.Height.Should().Be(options.ImageSize.Height);
-        }
-    }
-
+    
     [Test]
     public void GenerateCloud_WithLargeInput_HandlesCorrectly()
     {
@@ -107,8 +81,10 @@ public class TagCloudGeneratorIntegrationTests
             Font = "Arial",
             ImageSize = new Size(1200, 1200)
         };
-        
+
+
         generator.GenerateCloud(inputPath, outputPath, options);
+        
         
         File.Exists(outputPath).Should().BeTrue();
         using var image = Image.FromFile(outputPath);

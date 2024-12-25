@@ -11,6 +11,11 @@ var tagCloudGenerator = scope.Resolve<ITagCloudGenerator>();
 
 var inputFilePath = "input.txt";  
 var outputFilePath = "output.png";
-var imageSize = new Size(1000, 1000);
+var options = new RenderingOptions
+{
+    BackgroundColor = Color.Navy,
+    WordColors = [Color.White, Color.Yellow, Color.Orange],
+    ImageSize = new Size(1200, 800)
+};
 
-tagCloudGenerator.GenerateCloud(inputFilePath, outputFilePath, imageSize);
+tagCloudGenerator.GenerateCloud(inputFilePath, outputFilePath, options);

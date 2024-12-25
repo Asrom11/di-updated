@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using FluentAssertions;
 using System.Drawing;
+using TagsCloudContainer.PointGenerators;
 using TagsCloudVisualization;
 using TagsCloudVisualization.Extensions;
 
