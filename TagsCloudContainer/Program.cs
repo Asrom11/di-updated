@@ -39,7 +39,7 @@ public static class Program
         };
     }
 
-    static Color ParseColor(string colorString)
+    private static Color ParseColor(string colorString)
     {
         try
         {
