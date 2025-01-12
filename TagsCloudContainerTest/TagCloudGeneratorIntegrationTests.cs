@@ -3,7 +3,7 @@ using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer;
-using TagsCloudVisualization.Interfaces;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainerTest;
 
@@ -60,16 +60,16 @@ public class TagCloudGeneratorIntegrationTests
         image.Width.Should().Be(options.ImageSize.Width);
         image.Height.Should().Be(options.ImageSize.Height);
     }
-    
+
     [Test]
     public void GenerateCloud_WithLargeInput_HandlesCorrectly()
     {
         var random = new Random(42);
         var words = new[] { "test", "cloud", "generator", "word", "frequency" };
-        var testText = string.Join(" ", 
+        var testText = string.Join(" ",
             Enumerable.Range(0, 1000)
                 .Select(_ => words[random.Next(words.Length)]));
-        
+
         File.WriteAllText(inputPath, testText);
 
         using var scope = container.BeginLifetimeScope();
@@ -84,8 +84,8 @@ public class TagCloudGeneratorIntegrationTests
 
 
         generator.GenerateCloud(inputPath, outputPath, options);
-        
-        
+
+
         File.Exists(outputPath).Should().BeTrue();
         using var image = Image.FromFile(outputPath);
         image.Width.Should().Be(options.ImageSize.Width);

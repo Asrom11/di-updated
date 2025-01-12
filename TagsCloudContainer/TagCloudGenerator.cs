@@ -1,13 +1,12 @@
-﻿using System.Drawing;
-using TagsCloudVisualization;
-using TagsCloudVisualization.Interfaces;
+﻿using TagsCloudContainer.Interfaces;
+using TagsCloudContainer.DocumentReaders;
 
 namespace TagsCloudContainer;
 
-public class TagCloudGenerator(IWordProcessor wordProcessor, 
-    ITagCloudLayouter layouter, 
+public class TagCloudGenerator(IWordProcessor wordProcessor,
+    ITagCloudLayouter layouter,
     ITagCloudRenderer renderer,
-    ITextReader textReader,
+    IDocumentReader textReader,
     IWordFrequencyAnalyzer analyzer,
     ITextSizeCalculator sizeCalculator
     )
@@ -15,7 +14,7 @@ public class TagCloudGenerator(IWordProcessor wordProcessor,
 {
     public void GenerateCloud(string inputFilePath, string outputFilePath, RenderingOptions options)
     {
-        var words = textReader.ReadAllText(inputFilePath);
+        var words = textReader.ReadDocument(inputFilePath);
         var processedWords = wordProcessor.ProcessWords(words);
         var tags = analyzer.Analyze(processedWords);
 

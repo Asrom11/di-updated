@@ -1,9 +1,8 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
-using TagsCloudContainer;
-using TagsCloudVisualization.Interfaces;
+using TagsCloudContainer.Interfaces;
 
-namespace TagsCloudVisualization;
+namespace TagsCloudContainer;
 
 public class CloudImageRenderer : ITagCloudRenderer
 {
@@ -16,10 +15,10 @@ public class CloudImageRenderer : ITagCloudRenderer
     {
         using var bitmap = new Bitmap(options.ImageSize.Width, options.ImageSize.Height);
         using var graphics = Graphics.FromImage(bitmap);
-        
+
 
         graphics.Clear(options.BackgroundColor);
-        
+
 
         graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
@@ -28,10 +27,10 @@ public class CloudImageRenderer : ITagCloudRenderer
             var fontSize = Math.Max(MinFontSize, Math.Min(MaxFontSize, tag.Frequency * FrequencyMultiplier));
 
             using var font = new Font(options.Font, fontSize, FontStyle.Bold);
-            
+
             var color = options.WordColors[random.Next(options.WordColors.Length)];
             using var brush = new SolidBrush(color);
-            
+
             graphics.DrawString(
                 tag.Word,
                 font,

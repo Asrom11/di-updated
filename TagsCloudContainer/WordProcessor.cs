@@ -1,11 +1,22 @@
-﻿using TagsCloudVisualization.Interfaces;
+﻿using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer;
 
-public class WordProcessor(IEnumerable<string> boringWords) : IWordProcessor
+public class WordProcessor: IWordProcessor
 {
-    private readonly HashSet<string> _boringWords = [..boringWords];
+    private readonly HashSet<string> _boringWords;
 
+    public WordProcessor(string filepath)
+    {
+        if (string.IsNullOrWhiteSpace(filepath))
+        {
+            _boringWords = [];
+            return;
+        }
+
+        var words = File.ReadAllLines(filepath);
+        _boringWords = [..words];
+    }
     public IEnumerable<string> ProcessWords(IEnumerable<string> words)
     {
         ArgumentNullException.ThrowIfNull(words);

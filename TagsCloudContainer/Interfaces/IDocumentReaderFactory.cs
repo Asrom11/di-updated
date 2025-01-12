@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization.Interfaces;
+﻿namespace TagsCloudContainer.Interfaces;
 
 public interface IDocumentReaderFactory
 {

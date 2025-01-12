@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
-using TagsCloudContainer;
 
-namespace TagsCloudVisualization.Interfaces;
+namespace TagsCloudContainer.Interfaces;
 
 public interface ITextSizeCalculator
 {

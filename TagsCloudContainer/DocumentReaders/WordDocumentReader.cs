@@ -1,10 +1,12 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
-using TagsCloudVisualization.Interfaces;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer.DocumentReaders;
 
-public class DocReader : IDocumentReader
+public class WordDocumentReader : IDocumentReader
 {
+    public string[] SupportedDocumentExtensions => [".doc", ".docx"];
+
     public string[] ReadDocument(string filePath)
     {
         using var doc = WordprocessingDocument.Open(filePath, false);

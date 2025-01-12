@@ -3,7 +3,7 @@ using Autofac;
 using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer;
-using TagsCloudVisualization.Interfaces;
+using TagsCloudContainer.Interfaces;
 
 public class TagCloudGeneratorIntegrationTests
 {
@@ -15,7 +15,7 @@ public class TagCloudGeneratorIntegrationTests
     [OneTimeSetUp]
     public void GlobalSetup()
     {
-        container = DependencyInjectionConfig.BuildContainer();
+        container = DependencyInjectionConfig.BuildContainer(null);
         tempDirectory = Path.Combine(Path.GetTempPath(), "TagCloudTests");
         Directory.CreateDirectory(tempDirectory);
         inputPath = Path.Combine(tempDirectory, "input.txt");
@@ -50,9 +50,9 @@ public class TagCloudGeneratorIntegrationTests
             Font = "Arial",
             ImageSize = new Size(800, 600)
         };
-        
+
         generator.GenerateCloud(inputPath, outputPath, options);
-        
+
         File.Exists(outputPath).Should().BeTrue();
         using var image = Image.FromFile(outputPath);
         image.Width.Should().Be(options.ImageSize.Width);
@@ -74,12 +74,12 @@ public class TagCloudGeneratorIntegrationTests
             Font = "Arial",
             ImageSize = new Size(1000, 1000)
         };
-        
+
         foreach (var layouterName in new[] { "linear", "circular" })
         {
             var outputFile = Path.Combine(tempDirectory, $"output_{layouterName}.png");
             generator.GenerateCloud(inputPath, outputFile, options);
-            
+
             File.Exists(outputFile).Should().BeTrue();
             using var image = Image.FromFile(outputFile);
             image.Width.Should().Be(options.ImageSize.Width);
@@ -92,10 +92,10 @@ public class TagCloudGeneratorIntegrationTests
     {
         var random = new Random(42);
         var words = new[] { "test", "cloud", "generator", "word", "frequency" };
-        var testText = string.Join(" ", 
+        var testText = string.Join(" ",
             Enumerable.Range(0, 1000)
                 .Select(_ => words[random.Next(words.Length)]));
-        
+
         File.WriteAllText(inputPath, testText);
 
         using var scope = container.BeginLifetimeScope();
@@ -107,9 +107,9 @@ public class TagCloudGeneratorIntegrationTests
             Font = "Arial",
             ImageSize = new Size(1200, 1200)
         };
-        
+
         generator.GenerateCloud(inputPath, outputPath, options);
-        
+
         File.Exists(outputPath).Should().BeTrue();
         using var image = Image.FromFile(outputPath);
         image.Width.Should().Be(options.ImageSize.Width);

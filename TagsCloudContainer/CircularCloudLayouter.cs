@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
-using TagsCloudVisualization;
-using TagsCloudVisualization.Interfaces;
+using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer;
 

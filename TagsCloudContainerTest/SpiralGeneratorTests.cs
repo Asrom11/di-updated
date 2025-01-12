@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
 using FluentAssertions;
 using System.Drawing;
+using TagsCloudContainer.Extensions;
 using TagsCloudContainer.PointGenerators;
-using TagsCloudVisualization;
-using TagsCloudVisualization.Extensions;
 
 namespace TagsCloudVisualizationTest;
 

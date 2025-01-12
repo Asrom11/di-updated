@@ -7,19 +7,32 @@ namespace TagsCloudContainerTest;
 public class WordProcessorTests
 {
     private WordProcessor processor;
-    private readonly HashSet<string> boringWords = new() { "the", "a", "an" };
+    private string boringWordsFilePath;
 
     [SetUp]
     public void Setup()
     {
-        processor = new WordProcessor(boringWords);
+        boringWordsFilePath = Path.GetTempFileName();
+        File.WriteAllLines(boringWordsFilePath, new[] { "the", "a", "an" });
+
+        processor = new WordProcessor(boringWordsFilePath);
+    }
+
+    [TearDown]
+    public void Cleanup()
+    {
+        // Удаляем временный файл после тестов
+        if (File.Exists(boringWordsFilePath))
+        {
+            File.Delete(boringWordsFilePath);
+        }
     }
 
     [Test]
     public void ProcessWords_WithNullInput_ThrowsArgumentNullException()
     {
         Action act = () => processor.ProcessWords(null);
-        
+
         act.Should().Throw<ArgumentNullException>();
     }
 
@@ -27,7 +40,7 @@ public class WordProcessorTests
     public void ProcessWords_WithEmptyInput_ReturnsEmptyCollection()
     {
         var result = processor.ProcessWords(Array.Empty<string>());
-        
+
         result.Should().BeEmpty();
     }
 
@@ -35,35 +48,32 @@ public class WordProcessorTests
     public void ProcessWords_RemovesBoringWords()
     {
         var words = new[] { "Hello", "the", "World", "a" };
-        
-        var result = processor.ProcessWords(words).ToList();
-        
-        result.Should().HaveCount(2);
-        result.Should().Contain("hello");
-        result.Should().Contain("world");
+        var expected = new List<string>(){"hello", "world"};
+
+        var actual  = processor.ProcessWords(words).ToList();
+
+        actual.Should().BeEquivalentTo(expected);
     }
 
     [Test]
     public void ProcessWords_ConvertsToLowerCase()
     {
         var words = new[] { "Hello", "WORLD" };
-        
-        var result = processor.ProcessWords(words).ToList();
-        
-        result.Should().HaveCount(2);
-        result.Should().Contain("hello");
-        result.Should().Contain("world");
+        var expected = new List<string>(){"hello", "world"};
+
+        var actual = processor.ProcessWords(words).ToList();
+
+        actual.Should().BeEquivalentTo(expected);
     }
 
     [Test]
     public void ProcessWords_RemovesWhitespace()
     {
         var words = new[] { "  hello  ", "world  " };
-        
-        var result = processor.ProcessWords(words).ToList();
-        
-        result.Should().HaveCount(2);
-        result.Should().Contain("hello");
-        result.Should().Contain("world");
+        var expected = new List<string>(){"hello", "world"};
+
+        var actual = processor.ProcessWords(words).ToList();
+
+        actual.Should().BeEquivalentTo(expected);
     }
 }

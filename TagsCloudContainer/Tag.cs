@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace TagsCloudVisualization;
+namespace TagsCloudContainer;
 
 public class Tag(string word, int frequency)
 {

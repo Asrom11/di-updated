@@ -1,5 +1,4 @@
-﻿using TagsCloudVisualization;
-using TagsCloudVisualization.Interfaces;
+﻿using TagsCloudContainer.Interfaces;
 
 namespace TagsCloudContainer;
 
