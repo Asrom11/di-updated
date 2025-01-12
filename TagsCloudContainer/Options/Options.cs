@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace TagsCloudContainer;
+namespace TagsCloudContainer.Options;
 
 public class Options
 {

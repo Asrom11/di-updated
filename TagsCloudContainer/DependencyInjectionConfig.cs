@@ -2,14 +2,14 @@
 using Autofac;
 using TagsCloudContainer.DocumentReaders;
 using TagsCloudContainer.Interfaces;
+using TagsCloudContainer.Options;
 using TagsCloudContainer.PointGenerators;
-
 
 namespace TagsCloudContainer;
 
 public static class DependencyInjectionConfig
 {
-    public static IContainer BuildContainer(Options? options =  null)
+    public static IContainer BuildContainer(Options.Options? options = null)
     {
         var builder = new ContainerBuilder();
 
@@ -34,9 +34,7 @@ public static class DependencyInjectionConfig
 
         builder.RegisterType<DocumentReader>().AsSelf().SingleInstance();
 
-        builder.RegisterType<LogarithmicScaling>().
-            As<ITextSizeCalculator>().
-            SingleInstance();
+        builder.RegisterType<LogarithmicScaling>().As<ITextSizeCalculator>().SingleInstance();
 
         builder.RegisterType<WordFrequencyAnalyzer>()
             .As<IWordFrequencyAnalyzer>()

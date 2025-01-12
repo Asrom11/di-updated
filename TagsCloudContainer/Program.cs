@@ -3,6 +3,7 @@ using Autofac;
 using CommandLine;
 using TagsCloudContainer;
 using TagsCloudContainer.Interfaces;
+using TagsCloudContainer.Options;
 
 public static class Program
 {
@@ -53,7 +54,8 @@ public static class Program
         }
         catch
         {
-            throw new FormatException($"Invalid color format: {colorString}. Use a valid name (e.g., White) or HEX (e.g., #FFFFFF).");
+            throw new FormatException(
+                $"Invalid color format: {colorString}. Use a valid name (e.g., White) or HEX (e.g., #FFFFFF).");
         }
     }
 }

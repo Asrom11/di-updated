@@ -1,7 +1,7 @@
-﻿using DocumentFormat.OpenXml.Drawing.Charts;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using TagsCloudContainer;
+using TagsCloudContainer.Options;
 using Size = System.Drawing.Size;
 
 namespace TagsCloudContainerTest;
@@ -26,7 +26,7 @@ public class LogarithmicScalingTests
     public void GetWordSize_ReturnsSizeGreaterThanZero()
     {
         var size = calculator.GetWordSize("test", 1, options);
-        
+
         size.Width.Should().BeGreaterThan(0);
         size.Height.Should().BeGreaterThan(0);
     }
@@ -36,7 +36,7 @@ public class LogarithmicScalingTests
     {
         var smallSize = calculator.GetWordSize("test", 1, options);
         var largeSize = calculator.GetWordSize("test", 100, options);
-        
+
         largeSize.Width.Should().BeGreaterThan(smallSize.Width);
         largeSize.Height.Should().BeGreaterThan(smallSize.Height);
     }
@@ -46,7 +46,7 @@ public class LogarithmicScalingTests
     {
         var shortWordSize = calculator.GetWordSize("test", 10, options);
         var longWordSize = calculator.GetWordSize("testtesttest", 10, options);
-        
+
         longWordSize.Width.Should().BeGreaterThan(shortWordSize.Width);
     }
 
@@ -55,7 +55,7 @@ public class LogarithmicScalingTests
     {
         var size1 = calculator.GetWordSize("test", 10, options);
         var size2 = calculator.GetWordSize("test", 10, options);
-        
+
         size2.Should().Be(size1);
     }
 }

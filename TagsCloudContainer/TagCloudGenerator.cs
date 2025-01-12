@@ -1,15 +1,16 @@
 ﻿using TagsCloudContainer.Interfaces;
-using TagsCloudContainer.DocumentReaders;
+using TagsCloudContainer.Options;
 
 namespace TagsCloudContainer;
 
-public class TagCloudGenerator(IWordProcessor wordProcessor,
+public class TagCloudGenerator(
+    IWordProcessor wordProcessor,
     ITagCloudLayouter layouter,
     ITagCloudRenderer renderer,
     IDocumentReader textReader,
     IWordFrequencyAnalyzer analyzer,
     ITextSizeCalculator sizeCalculator
-    )
+)
     : ITagCloudGenerator
 {
     public void GenerateCloud(string inputFilePath, string outputFilePath, RenderingOptions options)

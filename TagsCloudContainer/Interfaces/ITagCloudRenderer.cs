@@ -1,4 +1,6 @@
-﻿namespace TagsCloudContainer.Interfaces;
+﻿using TagsCloudContainer.Options;
+
+namespace TagsCloudContainer.Interfaces;
 
 public interface ITagCloudRenderer
 {
